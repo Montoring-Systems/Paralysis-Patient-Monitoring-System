@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mini Project</title>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            // Replace with your Firebase configuration with abhishek
+            apiKey: "AIzaSyDWjNUhJ8LaPVPsytvWwu0Q6nxXwJ4wIac",
+            authDomain: "forest-monitoring-system.firebaseapp.com",
+            projectId: "forest-monitoring-system",
+            storageBucket: "forest-monitoring-system.appspot.com",
+            messagingSenderId: "149217236846",
+            appId: "1:149217236846:web:44f848c7858a04b34b537f",
+            measurementId: "G-K36YLNY17C",
+            databaseURL: "https://forest-monitoring-system-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+
+        // Initialize Firebase
+
+        firebase.initializeApp(firebaseConfig);
+
+        var databaseRef = firebase.database().ref('node');        //name ref as node
+
+        databaseRef.on('value', function (snapshot) {
+            var data = snapshot.val();
+            // Update your webpage with the new data
+            // For example, you can update HTML elements using their IDs
+            document.getElementById('right').innerHTML = data.right;
+            document.getElementById('left').innerHTML = data.left;
+            document.getElementById('up').innerHTML = data.up;
+            document.getElementById('down').innerHTML = data.down;
+           
+            if(data.right == "1"){
+                console.log("Smoke detected");
+                window.alert("message for right");
+            }
+            if(data.left == "1"){
+                console.log("Fire detected");
+                window.alert("message for left");
+            }
+            if(data.right == "1"){
+                console.log("Smoke detected");
+                window.alert("message for up");
+            }
+            if(data.left == "1"){
+                console.log("Fire detected");
+                window.alert("message for down");
+            }
+        });
+
+
+        /*setInterval(drawClock, 2000);
+
+        //function drawClock() {
+            var now = new Date();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
+            var second = now.getSeconds();
+
+            //Date
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            var today = new Date();
+            document.getElementById("date").innerHTML = today.toLocaleDateString("en-US", options);
+
+            //hour
+            var hourAngle = (360 * (hour / 12)) + ((360 / 12) * (minute / 60));
+            var minAngle = 360 * (minute / 60);
+            document.getElementById("hour").style.transform = "rotate(" + (hourAngle) + "deg)";
+            //minute
+            document.getElementById("min").style.transform = "rotate(" + (minAngle) + "deg)";
+
+
+            // Get sensor data from Firebase Firestore
+            //document.getElementById('temperature').innerHTML = data.Temperature;
+            //document.getElementById('humidity').innerHTML = data.Humidity;
+        }*/
+    </script>
+
+
+
+</head>
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+    @import url(https://fonts.googleapis.com/css?family=Advent+Pro:400,200);
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header
+    {
+    background-color: rgb(251, 252, 253);
+    padding: 10px;
+    text-align: center;   
+    }
+
+    .subheader{
+    background-color: #00A8A9;
+    text-align: center;
+    }
+
+    body {
+        background: #544947;
+        font-family: Montserrat, Arial, sans-serif;
+    }
+
+    h2 {
+        font-size: 14px;
+    }
+
+    .bottom {
+        background: whitesmoke;
+        padding: 8px;
+        text-align: center;
+    }
+
+    a:link {
+        color: black;
+        font-size:20px;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: rgb(26, 22, 22);
+        font-size: 20px;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: red;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:active {
+        color: yellow;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    .widget {
+        box-shadow: 0 40px 10px 5px rgba(0, 0, 0, 0.4);
+        margin: 100px auto;
+        height: 330px;
+        position: relative;
+        width: 500px;
+    }
+
+    .upper {
+        border-radius: 5px 5px 0 0;
+        background: #f5f5f5;
+        height: 200px;
+        padding: 20px;
+    }
+
+    .date {
+        font-size: 40px;
+    }
+
+    .year {
+        font-size: 30px;
+        color: #c1c1c1;
+    }
+
+    .place {
+        color: #222;
+        font-size: 40px;
+    }
+
+    .lower {
+        background: #00A8A9;
+        border-radius: 0 0 5px 5px;
+        font-family: 'Advent Pro';
+        font-weight: 200;
+        height: 130px;
+        width: 100%;
+    }
+
+    .clock {
+        background: #00A8A9;
+        border-radius: 100%;
+        box-shadow: 0 0 0 15px #f5f5f5, 0 10px 10px 5px rgba(0, 0, 0, 0.3);
+        height: 150px;
+        position: absolute;
+        right: 25px;
+        top: -35px;
+        width: 150px;
+    }
+
+    .hour {
+        background: #f5f5f5;
+        height: 50px;
+        left: 50%;
+        position: absolute;
+        top: 25px;
+        width: 4px;
+    }
+
+    .min {
+        background: #f5f5f5;
+        height: 65px;
+        left: 50%;
+        position: absolute;
+        top: 10px;
+        transform: rotate(100deg);
+        width: 4px;
+    }
+
+    .min,
+    .hour {
+        border-radius: 5px;
+        transform-origin: bottom center;
+        transition: all .5s linear;
+    }
+
+    .infos {
+        list-style: none;
+    }
+
+    .info {
+        color: #fff;
+        float: left;
+        height: 100%;
+        padding-top: 10px;
+        text-align: center;
+        width: 25%;
+    }
+
+    .info span {
+        display: inline-block;
+        font-size: 40px;
+        margin-top: 20px;
+    }
+
+    .weather p {
+        font-size: 20px;
+        padding: 10px 0;
+    }
+
+    .anim {
+        animation: fade .8s linear;
+    }
+
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    a {
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        font-size: 15;
+        font-weight: 500;
+    }
+</style>
+
+<body>
+
+    <div class="header">
+        <h1 style="font-size: 50px;"> PARALYSIS PATIENT MONITORING SYSTEM </h1>
+        <!--<h3 style="font-size: 25px;"> ECE GECBH 2020-2024 </h3>-->
+    </div>
+
+    <div class="subheader">
+        <h3 style="font-size: 25px;"> Total number of nodes : 2 </h3>
+        <h3 style="font-size: 25px;"> Online : 1 </h3>
+        <h3 style="font-size: 25px;"> Offline : 1 </h3>
+    </div>
+    <div class="column" style="display:flex;">
+        <div class="widget">
+            <!--<div class="clock">
+                <div class="min" id="min"></div>
+                <div class="hour" id="hour"></div>
+            </div>
+            <div class="upper">
+                <div class="date" id="date">21 March</div>
+                <div class="year">Temperature</div>
+                <div class="place update" id="temperature">23 &deg;C</div>
+            </div>-->
+            <div class="lower">
+                <ul class="infos">
+                    <li class="info temp">
+                        <h2 class="title">RIGHT</h2>
+                        <span class="update" id="right">0</span>
+                    </li>
+                    <li class="info weather">
+                        <h2 class="title">LEFT</h2>
+                        <span class="update" id="left">0</span>
+                    </li>
+                    <li class="info wind">
+                        <h2 class="title">UP</h2>
+                        <span class="update" id="up">0</span>
+                    </li>
+                    <li class="info humidity">
+                        <h2 class="title">DOWN</h2>
+                        <span class="update" id="down">0</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--<div class="widget">
+            <div class="clock">
+                <div class="min" id="min"></div>
+                <div class="hour" id="hour"></div>
+            </div>
+            <div class="upper">
+                <div class="date" id="date">21 March</div>
+                <div class="year">Temperature</div>-->
+                <!--<div class="place update" id="temperature">23 &deg;C</div>
+            </div>
+            <div class="lower">
+                <ul class="infos">
+                    <li class="info temp">
+                        <h2 class="title">TEMPERATURE</h2>
+                        <span class="update" id="temperature2">21 &deg;C</span>
+                    </li>
+                    <li class="info weather">
+                        <h2 class="title">FLAME</h2>
+                        <span class="update" id="flame2">0 </span>
+                    </li>
+                    <li class="info wind">
+                        <h2 class="title">SMOKE</h2>
+                        <span class="update" id="smoke2">0</span>
+                    </li>
+                    <li class="info humidity">
+                        <h2 class="title">HUMIDITY</h2>
+                        <span class="update" id="humidity2">23%</span>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+    </div>
+    <!--<div class="bottom">
+        <a href="https://www.w3schools.com/" target="_blank">About this system</a>
+        <h6 style="font-size: 13px;"> System developed by Amaresh, Rahul, Siddharth, Ananthapadmanabhan </h6>
+    </div>-->
+
+</body>
+
+</html>
